@@ -8,7 +8,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/LaFan/LaFanLine.unity
     guid: 604c344dc4fd0a44ca4176b43942ab03
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/LaFan/LaFanLine_Unity_Data.unity
     guid: 8c71b2187b4dc8043b234032e9d7b9ae
+  - enabled: 1
+    path: Assets/Scenes/LaFan/LaFanLegs_Unity_Data.unity
+    guid: f1e0af6c1987a2149a41e1a689d2075c
   m_configObjects: {}

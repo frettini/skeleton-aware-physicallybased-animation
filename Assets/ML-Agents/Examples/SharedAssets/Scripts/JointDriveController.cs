@@ -18,6 +18,8 @@ namespace Unity.MLAgentsExamples
         [HideInInspector] public Quaternion startingLocalRot;
         [HideInInspector] public Vector3 startingLocalPos;
 
+        [HideInInspector] public float initStrength;
+
         [Header("Ground & Target Contact")]
         [Space(10)]
         public GroundContact groundContact;
@@ -71,7 +73,7 @@ namespace Unity.MLAgentsExamples
             }
         }
 
-        public void Reset(BodyPart bp, Quaternion rotation)
+        public void Reset(BodyPart bp, Quaternion rotation, Vector3 velocity)
         {
  
             bp.rb.transform.position = bp.startingPos;
@@ -83,7 +85,7 @@ namespace Unity.MLAgentsExamples
                 bp.rb.transform.position = bp.rb.transform.parent.position + bp.rb.transform.parent.rotation * bp.startingLocalPos;
             }
 
-            bp.rb.velocity = Vector3.zero;
+            bp.rb.velocity = velocity;
             bp.rb.angularVelocity = Vector3.zero;
 
             //velocityBuffer = new List<Vector3>();
@@ -122,9 +124,28 @@ namespace Unity.MLAgentsExamples
             currentEularJointRotation = new Vector3(xRot, yRot, zRot);
         }
 
+        public void SetJointTargetRotationQuaternion(float x, float y, float z)
+        {
+            x = (x + 1f) * 0.5f;
+            y = (y + 1f) * 0.5f;
+            z = (z + 1f) * 0.5f;
+
+            var xRot = Mathf.Lerp(joint.lowAngularXLimit.limit, joint.highAngularXLimit.limit, x);
+            var yRot = Mathf.Lerp(-joint.angularYLimit.limit, joint.angularYLimit.limit, y);
+            var zRot = Mathf.Lerp(-joint.angularZLimit.limit, joint.angularZLimit.limit, z);
+
+            currentXNormalizedRot =
+                Mathf.InverseLerp(joint.lowAngularXLimit.limit, joint.highAngularXLimit.limit, xRot);
+            currentYNormalizedRot = Mathf.InverseLerp(-joint.angularYLimit.limit, joint.angularYLimit.limit, yRot);
+            currentZNormalizedRot = Mathf.InverseLerp(-joint.angularZLimit.limit, joint.angularZLimit.limit, zRot);
+
+            joint.targetRotation = Quaternion.Euler(xRot, yRot, zRot);
+            currentEularJointRotation = new Vector3(xRot, yRot, zRot);
+        }
+
         public void SetJointStrength(float strength)
         {
-            var rawVal = (strength + 1f) * 0.5f * thisJdController.maxJointForceLimit;
+            var rawVal = (strength + 1f) * 0.5f * initStrength;//thisJdController.maxJointForceLimit;
             var jd = new JointDrive
             {
                 positionSpring = thisJdController.maxJointSpring,
@@ -183,9 +204,10 @@ namespace Unity.MLAgentsExamples
                 startingPos = t.position,
                 startingRot = t.rotation
             };
-            //Debug.Log("STARTING POSITION OF " + t.name + " : " + t.position.ToString());
-            bp.startingLocalPos = t.localPosition;//root.InverseTransformDirection(t.position);
-            bp.startingLocalRot = t.localRotation;//Quaternion.Inverse(root.localRotation) *  t.localRotation;
+
+            // store the starting local position and rotations
+            bp.startingLocalPos = t.localPosition;
+            bp.startingLocalRot = t.localRotation;
 
             bp.rb.maxAngularVelocity = k_MaxAngularVelocity;
 
@@ -207,9 +229,10 @@ namespace Unity.MLAgentsExamples
                 {
                     positionSpring = maxJointSpring,
                     positionDamper = jointDampen,
-                    maximumForce = maxJointForceLimit
+                    maximumForce = bp.joint.slerpDrive.maximumForce //maxJointForceLimit
                 };
                 bp.joint.slerpDrive = jd;
+                bp.initStrength = bp.joint.slerpDrive.maximumForce;
             }
 
             bp.thisJdController = this;

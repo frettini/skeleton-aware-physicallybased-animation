@@ -10,7 +10,7 @@ using BodyPart = Unity.MLAgentsExamples.BodyPart;
 using Random = UnityEngine.Random;
 using Unity.MLAgents.SideChannels;
 
-public class LaFanLine : Agent
+public class LaFanLine : Agent, IWalkerAgent
 {
     [Header("Walk Speed")]
     [Range(0.1f, 10)]
@@ -70,9 +70,16 @@ public class LaFanLine : Agent
     //DirectionIndicator m_DirectionIndicator;
     [HideInInspector] public JointDriveController m_JdController;
     EnvironmentParameters m_ResetParams;
-    float[,] pose_rotations;
+    private float[,] pose_rotations;
 
+    [Header("Transform References")]
     public Transform RootRef;
+    public Transform OrientationRef;
+    public Vector3 LocalRotationOffset;
+
+    private Quaternion startingOrientationRef;
+    private List<Vector3> velocities;
+    private List<Vector3> prevPos;
 
     public override void Initialize()
     {
@@ -119,6 +126,16 @@ public class LaFanLine : Agent
         m_JdController.SetupBodyPart(forearmR);
         m_JdController.SetupBodyPart(handR);
 
+        startingOrientationRef = OrientationRef.rotation;
+        velocities = new List<Vector3>();
+        prevPos = new List<Vector3>();
+
+        for (int i = 0; i < m_JdController.bodyPartsList.Count; i++)
+        {
+            velocities.Add(Vector3.zero);
+            prevPos.Add(m_JdController.bodyPartsList[i].rb.transform.position);
+        }
+
         pose_rotations = Load_Init_Pos.Read_CSV("Text/walk1_subject1_csv");
         Debug.Log(pose_rotations.GetLength(0));
         Debug.Log(pose_rotations.GetLength(1));
@@ -133,46 +150,52 @@ public class LaFanLine : Agent
     public override void OnEpisodeBegin()
     {
         int count = 0;
+        int bpind = 0;
+
+        OrientationRef.rotation = startingOrientationRef;
+        int pose = Random.Range(0, 275);//pose_rotations.GetLength(0));
+        if (pose < 175)
+        {
+            pose += 75;
+        }
+        else
+        {
+            pose += 175;
+        }
+
         //Reset all of the body parts
         foreach (var bodyPart in m_JdController.bodyPartsDict.Values)
         {
-            int pose = Random.Range(80, 900);//pose_rotations.GetLength(0));
-
+            // for the hips, give the initial rot first and then rotate
             Quaternion temp_rot;
             temp_rot = bodyPart.startingRot;
             if (count == 0)
             {
-            //    //Vector3 euler = new Vector3(0f, -178f, -70f);
-            //    //temp_rot = Quaternion.Euler(euler);
-                //temp_rot = bodyPart.startingRot;
                 Quaternion poseRot = new Quaternion(pose_rotations[pose, count + 4], pose_rotations[pose, count + 5], pose_rotations[pose, count + 6], pose_rotations[pose, count + 3]);
-                //Quaternion globrot = bodyPart.rb.transform.parent.rotation* poseRot;
-                float z = (Quaternion.Inverse(bodyPart.startingLocalRot) * poseRot).eulerAngles.z;
-                float x = (Quaternion.Inverse(bodyPart.startingLocalRot) * poseRot).eulerAngles.x;
-                Quaternion deltaRot = Quaternion.Inverse(bodyPart.startingLocalRot) * poseRot;
-                temp_rot = poseRot * Quaternion.AngleAxis(-deltaRot.eulerAngles.y, Vector3.up) ;
-
-                
-                //temp_rot = Quaternion.AngleAxis(z, Vector3.forward) * Quaternion.AngleAxis(x, Vector3.right) * bodyPart.startingLocalRot;
-                //temp_rot = Quaternion.AngleAxis(z, bodyPart.rb.transform.forward) * Quaternion.AngleAxis(x, bodyPart.rb.transform.right) * bodyPart.startingLocalRot;
+                temp_rot = poseRot;
             }
             else
             {
-
-            //    Vector3 euler = new Vector3(pose_rotations[pose, count + 2], pose_rotations[pose, count + 1], pose_rotations[pose, count + 0]);
-            // load in order x,y,z,w
-            temp_rot = new Quaternion(pose_rotations[pose, count+4], pose_rotations[pose, count + 5], pose_rotations[pose, count + 6], pose_rotations[pose, count + 3]);
-            //    //temp_rot = Load_Init_Pos.ToQuaternion(euler);
-            //    temp_rot = Load_Init_Pos.BvhToUnityRotation(euler, AxisOrder.ZYX);
-            //    //temp_rot = new Quaternion(-temp_rot.z, -temp_rot.x, temp_rot.y, temp_rot.w);
-            //    //temp_rot = Quaternion.Euler(0f, 0f, -90f) * temp_rot;
-            //    //temp_rot = new Quaternion(pose_rotations[pose, count + 3], pose_rotations[pose, count + 1], pose_rotations[pose, count + 2], pose_rotations[pose, count + 0]);
-
+                temp_rot = new Quaternion(pose_rotations[pose, count+4], pose_rotations[pose, count + 5], pose_rotations[pose, count + 6], pose_rotations[pose, count + 3]);
             }
 
-            bodyPart.Reset(bodyPart, temp_rot);
 
-            count += 7;
+            velocities[bpind] = new Vector3(pose_rotations[pose, count + 7], pose_rotations[pose, count + 8], pose_rotations[pose, count + 9]);
+            prevPos[bpind] = new Vector3(pose_rotations[pose - 1, count + 0], pose_rotations[pose, count + 1], pose_rotations[pose, count + 2]);
+            bodyPart.Reset(bodyPart, temp_rot, velocities[bpind]);
+
+            if (count == 0)
+            {
+                UpdateOrientationObjects();
+                Quaternion rot = Quaternion.FromToRotation(OrientationRef.forward, Vector3.forward);
+                bodyPart.rb.transform.rotation = Quaternion.Euler(LocalRotationOffset) * rot * bodyPart.rb.transform.rotation;
+            }
+
+            velocities[bpind] = Vector3.zero;
+            prevPos[bpind] = bodyPart.rb.transform.position;
+
+            bpind++;
+            count += 10;
         }
 
         //Random start rotation to help generalize
@@ -185,32 +208,37 @@ public class LaFanLine : Agent
         MTargetWalkingSpeed =
             randomizeWalkSpeedEachEpisode ? Random.Range(0.1f, m_maxWalkingSpeed) : MTargetWalkingSpeed;
 
+        // reset the velocity calculation
+        for (int i = 0; i < m_JdController.bodyPartsList.Count; i++)
+        {
+            velocities[i] = Vector3.zero;
+            prevPos[i] = m_JdController.bodyPartsList[i].rb.transform.position;
+        }
+
         SetResetParameters();
     }
 
     /// <summary>
     /// Add relevant information on each body part to observations.
     /// </summary>
-    public void CollectObservationBodyPart(BodyPart bp, VectorSensor sensor)
+    public void CollectObservationBodyPart(BodyPart bp, VectorSensor sensor, int counter)
     {
         // Remove the ground check for now and check at the fixed update for early termination
         // sensor.AddObservation(bp.groundContact.touchingGround); // Is this bp touching the ground
 
         //Get velocities in the context of our orientation cube's space
         //Note: You can get these velocities in world space as well but it may not train as well.
-        //sensor.AddObservation(hips.transform.InverseTransformDirection(bp.rb.velocity));
-        //sensor.AddObservation(hips.transform.InverseTransformVector(bp.rb.velocity));
-        sensor.AddObservation(RootRef.transform.InverseTransformVector(bp.rb.velocity));
+        sensor.AddObservation(velocities[counter]);
         sensor.AddObservation(RootRef.transform.InverseTransformVector(bp.rb.angularVelocity));
 
         //Get position relative to hips in the context of our orientation cube's space
         //sensor.AddObservation(m_OrientationCube.transform.InverseTransformDirection(bp.rb.transform.position));
-        sensor.AddObservation(RootRef.transform.InverseTransformPoint(bp.rb.transform.position));
+        sensor.AddObservation(OrientationRef.transform.InverseTransformPoint(bp.rb.transform.position));
 
         //sensor.AddObservation(Quaternion.Inverse(m_OrientationCube.transform.rotation) * bp.rb.transform.rotation);
         //sensor.AddObservation(Quaternion.Inverse(hips.localRotation) * bp.rb.transform.localRotation);
         sensor.AddObservation(bp.rb.transform.localRotation);
-        //Debug.Log(bp.rb.name + " : " + bp.rb.transform.localRotation);
+      
 
     }
 
@@ -225,18 +253,11 @@ public class LaFanLine : Agent
         //ragdoll's avg vel
         var avgVel = CenterOfMassVelocity();
 
-        //avg center of mass body vel relative to cube
-        //vel goal relative to cube
-        //sensor.AddObservation(m_OrientationCube.transform.InverseTransformDirection(velGoal));
-
-        //rotation deltas
-        //sensor.AddObservation(Quaternion.FromToRotation(hips.forward, cubeForward));
-        //sensor.AddObservation(Quaternion.FromToRotation(head.forward, cubeForward));
-
-
+        int counter = 0;
         foreach (var bodyPart in m_JdController.bodyPartsList)
         {
-            CollectObservationBodyPart(bodyPart, sensor);
+            CollectObservationBodyPart(bodyPart, sensor, counter);
+            counter++;
         }
 
         sensor.AddObservation(m_OrientationCube.transform.InverseTransformDirection(avgVel));
@@ -268,12 +289,12 @@ public class LaFanLine : Agent
         bpDict[footR].SetJointTargetRotation(continuousActions[++i], continuousActions[++i], 0);
         bpDict[toeR].SetJointTargetRotation(continuousActions[++i], 0, 0);
 
-        //bpDict[shoulderL].SetJointTargetRotation(0, 0, 0);
+        bpDict[shoulderL].SetJointTargetRotation(0, 0, 0);
         bpDict[armL].SetJointTargetRotation(continuousActions[++i], continuousActions[++i], 0);
         bpDict[forearmL].SetJointTargetRotation(continuousActions[++i], 0, 0);
         bpDict[handL].SetJointTargetRotation(continuousActions[++i], continuousActions[++i], continuousActions[++i]);
 
-        //bpDict[shoulderL].SetJointTargetRotation(0, 0, 0);
+        bpDict[shoulderL].SetJointTargetRotation(0, 0, 0);
         bpDict[armR].SetJointTargetRotation(continuousActions[++i], continuousActions[++i], 0);
         bpDict[forearmR].SetJointTargetRotation(continuousActions[++i], 0, 0);
         bpDict[handR].SetJointTargetRotation(continuousActions[++i], continuousActions[++i], continuousActions[++i]);
@@ -303,7 +324,6 @@ public class LaFanLine : Agent
         bpDict[armR].SetJointStrength(continuousActions[++i]);
         bpDict[forearmR].SetJointStrength(continuousActions[++i]);
         bpDict[handR].SetJointStrength(continuousActions[++i]);
-        //Debug.Log("Number of acions : " + i.ToString());
     }
 
     //Update OrientationCube and DirectionIndicator
@@ -312,17 +332,19 @@ public class LaFanLine : Agent
         m_WorldDirToWalk = Vector3.right; //target.position - hips.position;
         
         m_OrientationCube.UpdateOrientation(hips, target);
-        //if (m_DirectionIndicator)
-        //{
-        //    m_DirectionIndicator.MatchOrientation(m_OrientationCube.transform);
-        //}
+
+        OrientationRef.position = hips.position;
+        OrientationRef.forward = hips.right;
+        Vector3 temp = new Vector3(OrientationRef.forward.x, 0f, OrientationRef.forward.z);
+        OrientationRef.rotation = Quaternion.FromToRotation(OrientationRef.forward, temp) * OrientationRef.rotation;
+
     }
 
     void FixedUpdate()
     {
         UpdateOrientationObjects();
         //AverageVelocityPerJoint();
-
+        ComputeVelocity();
         ComputeReward();
 
         if (hips.position.y < 0.2)
@@ -331,11 +353,14 @@ public class LaFanLine : Agent
         }
     }
 
-    private void AverageVelocityPerJoint()
+    private void ComputeVelocity()
     {
+        int ind = 0; 
         foreach (var bodyPart in m_JdController.bodyPartsList)
         {
-            bodyPart.UpdateVelBuffer(RootRef.transform.InverseTransformVector(bodyPart.rb.velocity));
+            velocities[ind] = OrientationRef.InverseTransformDirection((bodyPart.rb.transform.position - prevPos[ind])/Time.fixedDeltaTime);
+            prevPos[ind] = bodyPart.rb.transform.position;
+            ind++;
         }
     }
 
@@ -347,30 +372,11 @@ public class LaFanLine : Agent
         Vector3 direction = (target.position - m_OrientationCube.transform.position).normalized;
         direction = new Vector3(direction.x, 0f, direction.z);
 
-        //Debug.DrawRay(hips.position, avgVel, Color.blue);
-        //Debug.DrawRay(hips.position, direction, Color.green);
-        //Debug.DrawLine(hips.position, hips.position + direction * Vector3.Dot(avgVel, direction), Color.red);
+        float directionSpeed = Vector3.Dot(avgVel, direction);
+        float matchSpeedReward = MTargetWalkingSpeed - directionSpeed;
+        matchSpeedReward = Mathf.Exp(-0.25f * Mathf.Pow(Mathf.Max(0f, matchSpeedReward), 2f));
+        SetReward(matchSpeedReward);
 
-        float matchSpeedReward = MTargetWalkingSpeed - Vector3.Dot(avgVel, direction);
-        matchSpeedReward = Mathf.Exp(-0.25f*Mathf.Pow(Mathf.Max(0f, matchSpeedReward), 2f));
-        //Debug.Log("Velocity : " + avgVel);
-        //Debug.Log("Match Speed reward : " + matchSpeedReward);
-
-        // Compute the overall velocity of each joint 
-        float velMag = 0f;
-        int numOfRb = 0;
-        foreach (var item in m_JdController.bodyPartsList)
-        {
-            numOfRb++;
-            velMag += item.rb.velocity.magnitude;
-        }
-        // Penalize fast movement to enable energy conservation
-        float speedConsReward = 1f - Mathf.Exp(-0.0001f * Mathf.Pow(velMag, 2));
-        speedConsReward = 0f;
-
-        AddReward(matchSpeedReward - speedConsReward);
-
-        //Debug.Log("Full Reward : " + (matchSpeedReward - speedConsReward).ToString());
     }
 
     //Returns the average velocity of all of the body parts

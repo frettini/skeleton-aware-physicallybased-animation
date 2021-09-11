@@ -22,11 +22,13 @@ public class SkeletonSideChannel : SideChannel
         // do nothing for now
     }
 
-    public void SendSkeletonInfo(List<List<float>> initRotations, List<List<float>> initPositions)
+    public void SendSkeletonInfo(List<List<float>> initRotations, List<List<float>> initPositions, List<int> parents, float frametime)
     {
         using (var msgOut = new OutgoingMessage())
         {
             List<float> concatenatedMessage = new List<float>();
+
+            concatenatedMessage.Add(parents.Count);
 
             // Add rotations to message Queue
             for (int i = 0; i<initRotations.Count; i++)
@@ -43,10 +45,20 @@ public class SkeletonSideChannel : SideChannel
                 concatenatedMessage.Add(initPositions[i][1]);
                 concatenatedMessage.Add(initPositions[i][2]);
             }
+            // Add parents 
+            for (int i = 0; i < parents.Count; i++)
+            {
+                concatenatedMessage.Add(parents[i]);
+            }
+            // Add frametime
+            concatenatedMessage.Add(frametime);
+
             msgOut.WriteFloatList(concatenatedMessage);
 
 
             QueueMessageToSend(msgOut);
         }
     }
+
+    
 }

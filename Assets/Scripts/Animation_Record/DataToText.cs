@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DataToText
 {
-    private const int MAX_SIZE = 100000;
+    private const int MAX_SIZE = 20000;
     private float[,] m_data;
     private float m_numFeatures;
     private int lineInd = 0;

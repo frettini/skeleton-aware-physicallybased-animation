@@ -217,7 +217,7 @@ MonoBehaviour:
   agent: {fileID: 0}
   agentDoneOnGroundContact: 1
   penalizeGroundContact: 1
-  groundContactPenalty: -1
+  groundContactPenalty: 0
   touchingGround: 0
 --- !u!136 &325205664040020374
 CapsuleCollider:
@@ -241,8 +241,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 325205664040020371}
   serializedVersion: 2
-  m_Mass: 3
-  m_Drag: 0
+  m_Mass: 1.5
+  m_Drag: 0.05
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -280,22 +280,22 @@ ConfigurableJoint:
     spring: 0
     damper: 0
   m_LowAngularXLimit:
-    limit: -31.459154
+    limit: -21.299257
     bounciness: 0
     contactDistance: 0
   m_HighAngularXLimit:
-    limit: 24.985905
+    limit: 20.188505
     bounciness: 0
     contactDistance: 0
   m_AngularYZLimitSpring:
     spring: 0
     damper: 0
   m_AngularYLimit:
-    limit: 35.348183
+    limit: 26.772371
     bounciness: 0
     contactDistance: 0
   m_AngularZLimit:
-    limit: 55.700638
+    limit: 45.25841
     bounciness: 0
     contactDistance: 0
   m_TargetPosition: {x: 0, y: 0, z: 0}
@@ -332,7 +332,7 @@ ConfigurableJoint:
     serializedVersion: 3
     positionSpring: 10000
     positionDamper: 100
-    maximumForce: 25000
+    maximumForce: 1000
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
@@ -425,7 +425,7 @@ MonoBehaviour:
   agent: {fileID: 0}
   agentDoneOnGroundContact: 1
   penalizeGroundContact: 1
-  groundContactPenalty: -1
+  groundContactPenalty: 0
   touchingGround: 0
 --- !u!136 &1472918857527369633
 CapsuleCollider:
@@ -449,7 +449,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1472918857527369662}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 8
   m_Drag: 0.05
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -540,7 +540,7 @@ ConfigurableJoint:
     serializedVersion: 3
     positionSpring: 10000
     positionDamper: 100
-    maximumForce: 25000
+    maximumForce: 15000
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
@@ -605,7 +605,7 @@ MonoBehaviour:
   agent: {fileID: 0}
   agentDoneOnGroundContact: 1
   penalizeGroundContact: 1
-  groundContactPenalty: -1
+  groundContactPenalty: 0
   touchingGround: 0
 --- !u!136 &1769401900064635742
 CapsuleCollider:
@@ -720,7 +720,7 @@ ConfigurableJoint:
     serializedVersion: 3
     positionSpring: 10000
     positionDamper: 100
-    maximumForce: 25000
+    maximumForce: 15000
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
@@ -732,6 +732,36 @@ ConfigurableJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!1 &1919920603386816841
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 716884549105793496}
+  m_Layer: 0
+  m_Name: orientationroot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &716884549105793496
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1919920603386816841}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.911, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7769084062782229715}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2400015580132386918
 GameObject:
   m_ObjectHideFlags: 0
@@ -841,7 +871,7 @@ Transform:
   m_Children:
   - {fileID: 2479663655502742517}
   m_Father: {fileID: 7769084062782229715}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!114 &2541149361476648041
 MonoBehaviour:
@@ -941,7 +971,7 @@ MonoBehaviour:
   agent: {fileID: 0}
   agentDoneOnGroundContact: 0
   penalizeGroundContact: 0
-  groundContactPenalty: -1
+  groundContactPenalty: 0
   touchingGround: 0
 --- !u!136 &2711241738463619463
 CapsuleCollider:
@@ -966,7 +996,7 @@ Rigidbody:
   m_GameObject: {fileID: 2711241738463619460}
   serializedVersion: 2
   m_Mass: 5
-  m_Drag: 0
+  m_Drag: 0.05
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -1008,7 +1038,7 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 0
   m_HighAngularXLimit:
-    limit: 5.901761
+    limit: -4.8447294
     bounciness: 0
     contactDistance: 0
   m_AngularYZLimitSpring:
@@ -1119,7 +1149,7 @@ MonoBehaviour:
   agent: {fileID: 0}
   agentDoneOnGroundContact: 1
   penalizeGroundContact: 1
-  groundContactPenalty: -1
+  groundContactPenalty: 0
   touchingGround: 0
 --- !u!136 &2867298866878651728
 CapsuleCollider:
@@ -1144,7 +1174,7 @@ Rigidbody:
   m_GameObject: {fileID: 2867298866878651693}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 0
+  m_Drag: 0.05
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -1234,7 +1264,7 @@ ConfigurableJoint:
     serializedVersion: 3
     positionSpring: 10000
     positionDamper: 100
-    maximumForce: 25000
+    maximumForce: 10000
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
@@ -1297,7 +1327,7 @@ MonoBehaviour:
   agent: {fileID: 0}
   agentDoneOnGroundContact: 1
   penalizeGroundContact: 1
-  groundContactPenalty: -1
+  groundContactPenalty: 0
   touchingGround: 0
 --- !u!136 &3173647509657315909
 CapsuleCollider:
@@ -1322,7 +1352,7 @@ Rigidbody:
   m_GameObject: {fileID: 3173647509657315906}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 0
+  m_Drag: 0.05
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -1412,7 +1442,7 @@ ConfigurableJoint:
     serializedVersion: 3
     positionSpring: 10000
     positionDamper: 100
-    maximumForce: 25000
+    maximumForce: 10000
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
@@ -1475,7 +1505,7 @@ MonoBehaviour:
   agent: {fileID: 0}
   agentDoneOnGroundContact: 1
   penalizeGroundContact: 1
-  groundContactPenalty: -1
+  groundContactPenalty: 0
   touchingGround: 0
 --- !u!136 &3179959067274618572
 CapsuleCollider:
@@ -1500,7 +1530,7 @@ Rigidbody:
   m_GameObject: {fileID: 3179959067274618569}
   serializedVersion: 2
   m_Mass: 3
-  m_Drag: 0
+  m_Drag: 0.05
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -1516,11 +1546,11 @@ ConfigurableJoint:
   m_GameObject: {fileID: 3179959067274618569}
   m_ConnectedBody: {fileID: 6605212560524467059}
   m_Anchor: {x: 0, y: 0, z: 0}
-  m_Axis: {x: 0, y: 0, z: 1}
+  m_Axis: {x: 0, y: 0, z: -1}
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: 0.0000006371738, y: 0.3300009, z: 0.00000008821489}
   serializedVersion: 2
-  m_SecondaryAxis: {x: 0, y: 1, z: 0}
+  m_SecondaryAxis: {x: 1, y: 0, z: 0}
   m_XMotion: 0
   m_YMotion: 0
   m_ZMotion: 0
@@ -1538,11 +1568,11 @@ ConfigurableJoint:
     spring: 0
     damper: 0
   m_LowAngularXLimit:
-    limit: -82.1993
+    limit: 0.19683188
     bounciness: 0
     contactDistance: 0
   m_HighAngularXLimit:
-    limit: 77.21927
+    limit: 155.06833
     bounciness: 0
     contactDistance: 0
   m_AngularYZLimitSpring:
@@ -1590,10 +1620,10 @@ ConfigurableJoint:
     serializedVersion: 3
     positionSpring: 10000
     positionDamper: 100
-    maximumForce: 25000
+    maximumForce: 10000
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 180
+  m_ProjectionAngle: 35
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -1651,9 +1681,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 0}
-  agentDoneOnGroundContact: 1
-  penalizeGroundContact: 1
-  groundContactPenalty: -1
+  agentDoneOnGroundContact: 0
+  penalizeGroundContact: 0
+  groundContactPenalty: 0
   touchingGround: 0
 --- !u!136 &3534895591402388068
 CapsuleCollider:
@@ -1678,7 +1708,7 @@ Rigidbody:
   m_GameObject: {fileID: 3534895591402388065}
   serializedVersion: 2
   m_Mass: 3
-  m_Drag: 0
+  m_Drag: 0.05
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -1694,11 +1724,11 @@ ConfigurableJoint:
   m_GameObject: {fileID: 3534895591402388065}
   m_ConnectedBody: {fileID: 4559506751878600184}
   m_Anchor: {x: 0, y: 0, z: 0}
-  m_Axis: {x: 0, y: 0, z: 1}
+  m_Axis: {x: 0, y: 0, z: -1}
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: 0.00000024612996, y: 0.33000115, z: -0.00000009179114}
   serializedVersion: 2
-  m_SecondaryAxis: {x: 0, y: 1, z: 0}
+  m_SecondaryAxis: {x: 1, y: 0, z: 0}
   m_XMotion: 0
   m_YMotion: 0
   m_ZMotion: 0
@@ -1716,11 +1746,11 @@ ConfigurableJoint:
     spring: 0
     damper: 0
   m_LowAngularXLimit:
-    limit: -82.1993
+    limit: 18.906815
     bounciness: 0
     contactDistance: 0
   m_HighAngularXLimit:
-    limit: 77.21927
+    limit: 177
     bounciness: 0
     contactDistance: 0
   m_AngularYZLimitSpring:
@@ -1768,10 +1798,10 @@ ConfigurableJoint:
     serializedVersion: 3
     positionSpring: 10000
     positionDamper: 100
-    maximumForce: 25000
+    maximumForce: 10000
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 180
+  m_ProjectionAngle: 35
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -3678,7 +3708,7 @@ MonoBehaviour:
   agent: {fileID: 0}
   agentDoneOnGroundContact: 1
   penalizeGroundContact: 1
-  groundContactPenalty: -1
+  groundContactPenalty: 0
   touchingGround: 0
 --- !u!136 &4559506751878600185
 CapsuleCollider:
@@ -3703,7 +3733,7 @@ Rigidbody:
   m_GameObject: {fileID: 4559506751878600182}
   serializedVersion: 2
   m_Mass: 4
-  m_Drag: 0
+  m_Drag: 0.05
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -3793,10 +3823,10 @@ ConfigurableJoint:
     serializedVersion: 3
     positionSpring: 10000
     positionDamper: 100
-    maximumForce: 25000
+    maximumForce: 10000
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 180
+  m_ProjectionAngle: 35
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -3927,6 +3957,7 @@ GameObject:
   - component: {fileID: 4833367376950230244}
   - component: {fileID: 4833367376950230243}
   - component: {fileID: 4833367376950230242}
+  - component: {fileID: 8785251481016235472}
   m_Layer: 0
   m_Name: LeftToe
   m_TagString: Untagged
@@ -3941,7 +3972,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4833367376950230241}
-  m_LocalRotation: {x: 0, y: 0, z: -0.8191521, w: 0.57357645}
+  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0.00000013539567, y: 0.17299965, z: -0.000000017424826}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -3949,7 +3980,7 @@ Transform:
   - {fileID: 4481441824552783972}
   m_Father: {fileID: 7194697613100175418}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -110}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!114 &4833367376950230245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3976,7 +4007,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 4833367376950230241}
   m_Material: {fileID: 13400000, guid: 6746785424e276e4fabdda344698b383, type: 2}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.037435282
   m_Height: 0.12836792
   m_Direction: 2
@@ -3990,7 +4021,7 @@ Rigidbody:
   m_GameObject: {fileID: 4833367376950230241}
   serializedVersion: 2
   m_Mass: 0.5
-  m_Drag: 0
+  m_Drag: 0.05
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -4028,11 +4059,11 @@ ConfigurableJoint:
     spring: 0
     damper: 0
   m_LowAngularXLimit:
-    limit: -49.889393
+    limit: -15.065481
     bounciness: 0
     contactDistance: 0
   m_HighAngularXLimit:
-    limit: -6.505308
+    limit: 18.581783
     bounciness: 0
     contactDistance: 0
   m_AngularYZLimitSpring:
@@ -4082,8 +4113,8 @@ ConfigurableJoint:
     positionDamper: 100
     maximumForce: 25000
   m_ProjectionMode: 1
-  m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 180
+  m_ProjectionDistance: 0.01
+  m_ProjectionAngle: 45
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -4092,6 +4123,19 @@ ConfigurableJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!65 &8785251481016235472
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4833367376950230241}
+  m_Material: {fileID: 13400000, guid: 6746785424e276e4fabdda344698b383, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.061091796, y: 0.06476548, z: 0.12791407}
+  m_Center: {x: -0.0017070615, y: -0.003172635, z: 6.1049305e-10}
 --- !u!1 &5072523917237400766
 GameObject:
   m_ObjectHideFlags: 0
@@ -4173,7 +4217,7 @@ MonoBehaviour:
   agent: {fileID: 0}
   agentDoneOnGroundContact: 1
   penalizeGroundContact: 1
-  groundContactPenalty: -1
+  groundContactPenalty: 0
   touchingGround: 0
 --- !u!136 &5388781069173440303
 CapsuleCollider:
@@ -4198,7 +4242,7 @@ Rigidbody:
   m_GameObject: {fileID: 5388781069173440300}
   serializedVersion: 2
   m_Mass: 2
-  m_Drag: 0
+  m_Drag: 0.05
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -4236,11 +4280,11 @@ ConfigurableJoint:
     spring: 0
     damper: 0
   m_LowAngularXLimit:
-    limit: -24.571884
+    limit: -16.921183
     bounciness: 0
     contactDistance: 0
   m_HighAngularXLimit:
-    limit: 29.260756
+    limit: 20.875135
     bounciness: 0
     contactDistance: 0
   m_AngularYZLimitSpring:
@@ -4288,7 +4332,7 @@ ConfigurableJoint:
     serializedVersion: 3
     positionSpring: 10000
     positionDamper: 100
-    maximumForce: 25000
+    maximumForce: 1000
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
@@ -4313,6 +4357,7 @@ GameObject:
   - component: {fileID: 5717931726166742302}
   - component: {fileID: 5717931726166742301}
   - component: {fileID: 5717931726166742300}
+  - component: {fileID: 1743756205493980137}
   m_Layer: 0
   m_Name: RightFoot
   m_TagString: Untagged
@@ -4362,7 +4407,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 5717931726166742299}
   m_Material: {fileID: 13400000, guid: 6746785424e276e4fabdda344698b383, type: 2}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.040749438
   m_Height: 0.1611021
   m_Direction: 1
@@ -4376,7 +4421,7 @@ Rigidbody:
   m_GameObject: {fileID: 5717931726166742299}
   serializedVersion: 2
   m_Mass: 2
-  m_Drag: 0
+  m_Drag: 0.05
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -4468,8 +4513,8 @@ ConfigurableJoint:
     positionDamper: 100
     maximumForce: 25000
   m_ProjectionMode: 1
-  m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 180
+  m_ProjectionDistance: 0.01
+  m_ProjectionAngle: 45
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -4478,6 +4523,19 @@ ConfigurableJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!65 &1743756205493980137
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5717931726166742299}
+  m_Material: {fileID: 13400000, guid: 6746785424e276e4fabdda344698b383, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.060009137, y: 0.16376846, z: 0.10354163}
+  m_Center: {x: -0.003387864, y: 0.054929286, z: 8.0772355e-10}
 --- !u!1 &6003455771606609589
 GameObject:
   m_ObjectHideFlags: 0
@@ -4608,7 +4666,7 @@ MonoBehaviour:
   agent: {fileID: 0}
   agentDoneOnGroundContact: 1
   penalizeGroundContact: 1
-  groundContactPenalty: -1
+  groundContactPenalty: 0
   touchingGround: 0
 --- !u!136 &6208168458283639027
 CapsuleCollider:
@@ -4633,7 +4691,7 @@ Rigidbody:
   m_GameObject: {fileID: 6208168458283639024}
   serializedVersion: 2
   m_Mass: 7
-  m_Drag: 0
+  m_Drag: 0.05
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -4682,7 +4740,7 @@ ConfigurableJoint:
     spring: 0
     damper: 0
   m_AngularYLimit:
-    limit: 40.78945
+    limit: 24.89322
     bounciness: 0
     contactDistance: 0
   m_AngularZLimit:
@@ -4786,7 +4844,7 @@ MonoBehaviour:
   agent: {fileID: 0}
   agentDoneOnGroundContact: 0
   penalizeGroundContact: 0
-  groundContactPenalty: -1
+  groundContactPenalty: 0
   touchingGround: 0
 --- !u!136 &6261363011375380501
 CapsuleCollider:
@@ -4811,7 +4869,7 @@ Rigidbody:
   m_GameObject: {fileID: 6261363011375380498}
   serializedVersion: 2
   m_Mass: 5
-  m_Drag: 0
+  m_Drag: 0.05
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -4853,7 +4911,7 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 0
   m_HighAngularXLimit:
-    limit: 5.901761
+    limit: -4.8447294
     bounciness: 0
     contactDistance: 0
   m_AngularYZLimitSpring:
@@ -4964,7 +5022,7 @@ MonoBehaviour:
   agent: {fileID: 0}
   agentDoneOnGroundContact: 1
   penalizeGroundContact: 1
-  groundContactPenalty: -1
+  groundContactPenalty: 0
   touchingGround: 0
 --- !u!136 &6605212560524467060
 CapsuleCollider:
@@ -4989,7 +5047,7 @@ Rigidbody:
   m_GameObject: {fileID: 6605212560524467057}
   serializedVersion: 2
   m_Mass: 4
-  m_Drag: 0
+  m_Drag: 0.05
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -5079,10 +5137,10 @@ ConfigurableJoint:
     serializedVersion: 3
     positionSpring: 10000
     positionDamper: 100
-    maximumForce: 25000
+    maximumForce: 10000
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 180
+  m_ProjectionAngle: 35
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -5104,6 +5162,7 @@ GameObject:
   - component: {fileID: 6671639391657583889}
   - component: {fileID: 6671639391657583888}
   - component: {fileID: 6671639391657585391}
+  - component: {fileID: 2607320920194904051}
   m_Layer: 0
   m_Name: RightToe
   m_TagString: Untagged
@@ -5118,7 +5177,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6671639391657585390}
-  m_LocalRotation: {x: 0, y: 0, z: -0.8241262, w: 0.56640637}
+  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: -0.00000004887581, y: 0.17299981, z: 0.0000002316758}
   m_LocalScale: {x: 0.9999999, y: 1.0000001, z: 1}
   m_Children:
@@ -5126,7 +5185,7 @@ Transform:
   - {fileID: 5598298566247874515}
   m_Father: {fileID: 4007604643395434609}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -111}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!114 &6671639391657583890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5153,7 +5212,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 6671639391657585390}
   m_Material: {fileID: 13400000, guid: 6746785424e276e4fabdda344698b383, type: 2}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.038011365
   m_Height: 0.1272965
   m_Direction: 2
@@ -5167,7 +5226,7 @@ Rigidbody:
   m_GameObject: {fileID: 6671639391657585390}
   serializedVersion: 2
   m_Mass: 0.5
-  m_Drag: 0
+  m_Drag: 0.05
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -5205,11 +5264,11 @@ ConfigurableJoint:
     spring: 0
     damper: 0
   m_LowAngularXLimit:
-    limit: -49.889393
+    limit: -15.065481
     bounciness: 0
     contactDistance: 0
   m_HighAngularXLimit:
-    limit: -6.505308
+    limit: 18.581783
     bounciness: 0
     contactDistance: 0
   m_AngularYZLimitSpring:
@@ -5259,8 +5318,8 @@ ConfigurableJoint:
     positionDamper: 100
     maximumForce: 25000
   m_ProjectionMode: 1
-  m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 180
+  m_ProjectionDistance: 0.01
+  m_ProjectionAngle: 45
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -5269,6 +5328,19 @@ ConfigurableJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!65 &2607320920194904051
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6671639391657585390}
+  m_Material: {fileID: 13400000, guid: 6746785424e276e4fabdda344698b383, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.061091796, y: 0.06476548, z: 0.12791407}
+  m_Center: {x: -0.0017070615, y: -0.003172635, z: 6.1049305e-10}
 --- !u!1 &6961021749470746217
 GameObject:
   m_ObjectHideFlags: 0
@@ -5300,6 +5372,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 716884549105793496}
   - {fileID: 2363106149811937048}
   - {fileID: 4616811926256233475}
   m_Father: {fileID: 0}
@@ -5321,9 +5394,9 @@ MonoBehaviour:
     VectorObservationSize: 292
     NumStackedVectorObservations: 1
     m_ActionSpec:
-      m_NumContinuousActions: 41
+      m_NumContinuousActions: 60
       BranchSizes: 
-    VectorActionSize: 29000000
+    VectorActionSize: 3c000000
     VectorActionDescriptions: []
     VectorActionSpaceType: 1
     hasUpgradedBrainParametersWithActionSpec: 1
@@ -5351,7 +5424,7 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 5000
-  m_TargetWalkingSpeed: 2.5
+  m_TargetWalkingSpeed: 1
   randomizeWalkSpeedEachEpisode: 0
   scaleCompensation: 0.01
   target: {fileID: 0}
@@ -5379,6 +5452,8 @@ MonoBehaviour:
   handR: {fileID: 6552975563860130347}
   m_JdController: {fileID: 0}
   RootRef: {fileID: 2479663655502742517}
+  OrientationRef: {fileID: 716884549105793496}
+  LocalRotationOffset: {x: 0, y: -90, z: 0}
 --- !u!114 &1479378602325868573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5491,7 +5566,7 @@ MonoBehaviour:
   agent: {fileID: 0}
   agentDoneOnGroundContact: 1
   penalizeGroundContact: 1
-  groundContactPenalty: -1
+  groundContactPenalty: 0
   touchingGround: 0
 --- !u!136 &7000522062308855382
 CapsuleCollider:
@@ -5515,7 +5590,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7000522062308855379}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 8
   m_Drag: 0.05
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -5606,7 +5681,7 @@ ConfigurableJoint:
     serializedVersion: 3
     positionSpring: 10000
     positionDamper: 100
-    maximumForce: 25000
+    maximumForce: 15000
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
@@ -5748,7 +5823,7 @@ MonoBehaviour:
   agent: {fileID: 0}
   agentDoneOnGroundContact: 1
   penalizeGroundContact: 1
-  groundContactPenalty: -1
+  groundContactPenalty: 0
   touchingGround: 0
 --- !u!136 &7819586358413559047
 CapsuleCollider:
@@ -5773,7 +5848,7 @@ Rigidbody:
   m_GameObject: {fileID: 7819586358413559044}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 0
+  m_Drag: 0.05
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -5863,10 +5938,10 @@ ConfigurableJoint:
     serializedVersion: 3
     positionSpring: 10000
     positionDamper: 100
-    maximumForce: 25000
+    maximumForce: 5000
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 180
+  m_ProjectionAngle: 35
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -5926,7 +6001,7 @@ MonoBehaviour:
   agent: {fileID: 0}
   agentDoneOnGroundContact: 1
   penalizeGroundContact: 1
-  groundContactPenalty: -1
+  groundContactPenalty: 0
   touchingGround: 0
 --- !u!136 &8271893025853651763
 CapsuleCollider:
@@ -5950,8 +6025,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8271893025853651760}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 7
+  m_Drag: 0.05
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -6000,7 +6075,7 @@ ConfigurableJoint:
     spring: 0
     damper: 0
   m_AngularYLimit:
-    limit: 40.78945
+    limit: 24.56942
     bounciness: 0
     contactDistance: 0
   m_AngularZLimit:
@@ -6106,7 +6181,7 @@ MonoBehaviour:
   agent: {fileID: 0}
   agentDoneOnGroundContact: 1
   penalizeGroundContact: 1
-  groundContactPenalty: -1
+  groundContactPenalty: 0
   touchingGround: 0
 --- !u!136 &8486067122763763392
 CapsuleCollider:
@@ -6201,7 +6276,7 @@ MonoBehaviour:
   agent: {fileID: 0}
   agentDoneOnGroundContact: 1
   penalizeGroundContact: 1
-  groundContactPenalty: -1
+  groundContactPenalty: 0
   touchingGround: 0
 --- !u!136 &8690161259620610412
 CapsuleCollider:
@@ -6226,7 +6301,7 @@ Rigidbody:
   m_GameObject: {fileID: 8690161259620610409}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 0
+  m_Drag: 0.05
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -6316,10 +6391,10 @@ ConfigurableJoint:
     serializedVersion: 3
     positionSpring: 10000
     positionDamper: 100
-    maximumForce: 25000
+    maximumForce: 5000
   m_ProjectionMode: 1
   m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 180
+  m_ProjectionAngle: 35
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -6341,6 +6416,7 @@ GameObject:
   - component: {fileID: 8830556911122789463}
   - component: {fileID: 8830556911122789462}
   - component: {fileID: 8830556911122789461}
+  - component: {fileID: 3829472574937163573}
   m_Layer: 0
   m_Name: LeftFoot
   m_TagString: Untagged
@@ -6390,7 +6466,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 8830556911122789460}
   m_Material: {fileID: 13400000, guid: 6746785424e276e4fabdda344698b383, type: 2}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.040749438
   m_Height: 0.1611021
   m_Direction: 1
@@ -6404,7 +6480,7 @@ Rigidbody:
   m_GameObject: {fileID: 8830556911122789460}
   serializedVersion: 2
   m_Mass: 2
-  m_Drag: 0
+  m_Drag: 0.05
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -6496,8 +6572,8 @@ ConfigurableJoint:
     positionDamper: 100
     maximumForce: 25000
   m_ProjectionMode: 1
-  m_ProjectionDistance: 0.1
-  m_ProjectionAngle: 180
+  m_ProjectionDistance: 0.01
+  m_ProjectionAngle: 45
   m_ConfiguredInWorldSpace: 0
   m_SwapBodies: 0
   m_BreakForce: Infinity
@@ -6506,6 +6582,19 @@ ConfigurableJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!65 &3829472574937163573
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8830556911122789460}
+  m_Material: {fileID: 13400000, guid: 6746785424e276e4fabdda344698b383, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.060009137, y: 0.16376846, z: 0.10354163}
+  m_Center: {x: -0.003387864, y: 0.054929286, z: 8.0772355e-10}
 --- !u!1 &9035682564166929328
 GameObject:
   m_ObjectHideFlags: 0
@@ -6595,7 +6684,7 @@ PrefabInstance:
     - target: {fileID: 2591864627249999504, guid: 72f745913c5a34df5aaadd5c1f0024cb,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2591864627249999504, guid: 72f745913c5a34df5aaadd5c1f0024cb,
         type: 3}
